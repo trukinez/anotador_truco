@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset= "UTF-8"
+			name="viewport"
+			content="width=device-width, initial-scale=1.0">
+		<title>Anotador de Truco</title>
+		<script>
+		let nos = 0;
+		let filanos = 1;
+		let ellos = 0;
+		let filaellos = 1;
+		let stringfila = "1";
+		let id="";
+		let fila_aux=0;
+		let nos_aux=0;
+		const scoreimg = [
+			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+			'imagenes/1.png',
+			'imagenes/2.png', 
+			'imagenes/3.png',
+			'imagenes/4.png',
+			'imagenes/5.png'];
+
+		function newGame() {
+			if (confirm("Querés empezar una nueva partida?") == true) {
+				location.reload();
+			}
+		}
+
+		function changeScoreNos(value) {
+			nos = nos + value;
+			if (nos< 0) {nos = 0;}			
+			if (nos> 30) {nos = 30;}
+
+
+			filanos_aux = filanos;
+			filanos = Math.ceil(nos/5) || 1;
+
+			if (filanos < filanos_aux) {
+				id = "fila" + filanos_aux + "nos";
+				const img = document.getElementById(id);
+				if (img) {img.src = scoreimg[0];}
+			}
+
+			let imageIndex = nos % 5;
+			if (imageIndex === 0 && nos > 0) imageIndex = 5;
+
+			id = "fila" + filanos + "nos";
+			const img = document.getElementById(id);
+
+			if (img) {img.src = scoreimg[imageIndex];}
+			if (nos >= 30) {
+				setTimeout(function() {newGame();},0);
+			}
+			console.log(nos);
+			console.log(filanos);
+			console.log(imageIndex);
+			console.log(" ")
+		}
+
+		function changeScoreEllos(value) {
+			if (ellos + value < 0) {
+				ellos++;
+			}
+			if (ellos%5 == 0 && ellos != 0) {
+				filaellos = filaellos + value;
+				stringfila = filaellos.toString();
+			} 
+			ellos = ellos + value;
+			id = "fila" + stringfila + "ellos";
+			const img = document.getElementById(id);
+			img.src = scoreimg[ellos - (filaellos-1)*5];
+			if (ellos > 29) {
+				newGame();
+			}
+		}
+
+		</script>
+		<style>
+		body{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		}
+		hr {
+		margin-left: 0;
+		margin-right: 0;
+		width: 100%;
+		foreground: #000000; 
+		}
+		table {
+		table-layout: fixed;
+		width: 90%;
+		margin: 10px auto;
+		border-collapse: collapse;
+		}
+		th {
+		border-left: 1px solid black;
+		}
+		table tr td:first-child, th:first-child{
+		border-left: none;
+		}
+		td {
+		padding: 0.6em;
+		border: 1px solid black;
+		}
+		tbody tr:nth-child(3n+2) {
+		border-top: 1px solid black;
+		}
+		img {
+		max-width: 6%;
+		max-height: 6%
+		}
+		.flex-fila {
+		display: flex;
+		justify-content: center;
+		}
+		.flex-columna {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		}
+
+		</style>
+
+	</head>
+	<body>
+		<h1>Anotador</h1>
+		<hr>
+		<div class="flex-fila">
+			
+		<div class="flex-columna">
+		<button onclick="changeScoreNos(+1)">+</button>
+		<button onclick="changeScoreNos(-1)">-</button>
+		</div>
+		<table>
+			<tr>
+				<th>Nos</th>
+				<th>Ellos</th>
+			</tr>
+			<tr>
+				<th><img id="fila1nos" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt=""></th>  
+				<!-- 1px transparent encoded image 
+				https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/ -->
+				<th><img id="fila1ellos" 
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+					alt=""></th>
+			</tr>
+			<tr>
+				<th><img id="fila2nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+				<th><img id="fila2ellos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+			</tr>
+			<tr>
+				<th><img id="fila3nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+				<th><img id="fila3ellos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+			</tr>
+			<tr>
+				<th><img id="fila4nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+				<th><img id="fila4ellos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+			</tr>
+			<tr>
+				<th><img id="fila5nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+				<th><img id="fila5ellos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+			</tr>
+			<tr>
+				<th><img id="fila6nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+				<th><img id="fila6ellos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>
+			</tr>
+
+		</table>
+
+		<div class="flex-columna">
+		<button onclick="changeScoreEllos(+1)">+</button>
+		<button onclick="changeScoreEllos(-1)">-</button>
+		</div>
+
+		</div>
+	</body>
+
