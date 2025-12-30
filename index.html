@@ -82,8 +82,27 @@
 			}
 
 		}
+		// Check current preference
+		const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+		if (isDarkMode) {
+			console.log('User prefers dark mode');
+		} else {
+			console.log('User prefers light mode');
+		}
+
+		// Listen for changes
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+		mediaQuery.addEventListener('change', (e) => {
+			if (e.matches) {
+				console.log('Switched to dark mode');
+			} else {
+				console.log('Switched to light mode');
+			}
+		});
 		</script>
+
 		<style>
 		body{
 		display: flex;
@@ -91,6 +110,11 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
+		background: #282828;
+		}
+		h1 {
+		font-family: Arial;
+		color: #d79921;
 		}
 		hr {
 		margin-left: 0;
@@ -105,17 +129,19 @@
 		border-collapse: collapse;
 		}
 		th {
-		border-left: 1px solid black;
+		border-left: 1px solid #7c6f64;
+		font-family: Arial;
+		color: #ebdbb2;
 		}
 		table tr td:first-child, th:first-child{
 		border-left: none;
 		}
 		td {
 		padding: 0.6em;
-		border: 1px solid black;
+		border: 1px solid #7c6f64;
 		}
 		tbody tr:nth-child(3n+2) {
-		border-top: 1px solid black;
+		border-top: 1px solid #7c6f64;
 		}
 		img {
 		max-width: 12%;
@@ -135,9 +161,32 @@
 		min-width: 50px;
 		height: 45%;
 		width:  45%;
+		background: none;
+		border-radius: 50px;
+		color: #ebdbb2;
+		}
+		:root {
+		--bg-primary: #ffffff;
+		--bg-secondary: #f5f5f5;
+		--text-primary: #1a1a1a;
+		--text-secondary: #666666;
+		--border-color: #e5e5e5;
+		--accent: #0066ff;
 		}
 
+		/* Dark mode */
+		@media (prefers-color-scheme: dark) {
+		:root {
+		--bg-primary: #1a1a1a;
+		--bg-secondary: #2d2d2d;
+		--text-primary: #ffffff;
+		--text-secondary: #a0a0a0;
+		--border-color: #404040;
+		--accent: #4d94ff;
+		}
+		}
 		</style>
+
 
 	</head>
 	<body>
@@ -213,5 +262,6 @@
 		</div>
 
 		</div>
+		<button style="max-width:70px" onclick="newGame()">Nueva Partida</button>
 	</body>
 
