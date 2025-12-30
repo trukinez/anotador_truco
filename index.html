@@ -8,12 +8,12 @@
 		<script>
 		let nos = 0;
 		let filanos = 1;
+		let filanos_aux = filanos;
 		let ellos = 0;
 		let filaellos = 1;
+		let filaellos_aux = filaellos;
 		let stringfila = "1";
 		let id="";
-		let fila_aux=0;
-		let nos_aux=0;
 		const scoreimg = [
 			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
 			'imagenes/1.png',
@@ -23,7 +23,7 @@
 			'imagenes/5.png'];
 
 		function newGame() {
-			if (confirm("Querés empezar una nueva partida?") == true) {
+			if (confirm("Querés empezar una partida nueva?") == true) {
 				location.reload();
 			}
 		}
@@ -35,7 +35,7 @@
 
 
 			filanos_aux = filanos;
-			filanos = Math.ceil(nos/5) || 1;
+			filanos = Math.ceil(nos/5) || 1; // Funcion mágica que agrega +1 cada 5 despues del 6
 
 			if (filanos < filanos_aux) {
 				id = "fila" + filanos_aux + "nos";
@@ -51,29 +51,36 @@
 
 			if (img) {img.src = scoreimg[imageIndex];}
 			if (nos >= 30) {
-				setTimeout(function() {newGame();},0);
+				setTimeout(function() {newGame();},250); // Timeout para que el dom renderice a tiempo la ultima imagen
 			}
-			console.log(nos);
-			console.log(filanos);
-			console.log(imageIndex);
-			console.log(" ")
 		}
 
 		function changeScoreEllos(value) {
-			if (ellos + value < 0) {
-				ellos++;
-			}
-			if (ellos%5 == 0 && ellos != 0) {
-				filaellos = filaellos + value;
-				stringfila = filaellos.toString();
-			} 
 			ellos = ellos + value;
-			id = "fila" + stringfila + "ellos";
-			const img = document.getElementById(id);
-			img.src = scoreimg[ellos - (filaellos-1)*5];
-			if (ellos > 29) {
-				newGame();
+			if (ellos< 0) {ellos = 0;}			
+			if (ellos> 30) {ellos = 30;}
+
+
+			filaellos_aux = filaellos;
+			filaellos = Math.ceil(ellos/5) || 1; // Funcion mágica que agrega +1 cada 5 despues del 6
+
+			if (filaellos < filaellos_aux) {
+				id = "fila" + filaellos_aux + "ellos";
+				const img = document.getElementById(id);
+				if (img) {img.src = scoreimg[0];}
 			}
+
+			let imageIndex = ellos % 5;
+			if (imageIndex === 0 && ellos > 0) imageIndex = 5;
+
+			id = "fila" + filaellos + "ellos";
+			const img = document.getElementById(id);
+
+			if (img) {img.src = scoreimg[imageIndex];}
+			if (ellos >= 30) {
+				setTimeout(function() {newGame();},250); // Timeout para que el dom renderice a tiempo la ultima imagen
+			}
+
 		}
 
 		</script>
@@ -93,7 +100,7 @@
 		}
 		table {
 		table-layout: fixed;
-		width: 90%;
+		width: 60%;
 		margin: 10px auto;
 		border-collapse: collapse;
 		}
@@ -111,17 +118,23 @@
 		border-top: 1px solid black;
 		}
 		img {
-		max-width: 6%;
-		max-height: 6%
+		max-width: 12%;
+		max-height: 12%
 		}
 		.flex-fila {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 		}
 		.flex-columna {
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
+		}
+		button {
+		min-width: 50px;
+		height: 45%;
+		width:  45%;
 		}
 
 		</style>
@@ -142,7 +155,9 @@
 				<th>Ellos</th>
 			</tr>
 			<tr>
-				<th><img id="fila1nos" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt=""></th>  
+				<th><img id="fila1nos"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					alt=""></th>  
 				<!-- 1px transparent encoded image 
 				https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/ -->
 				<th><img id="fila1ellos" 
