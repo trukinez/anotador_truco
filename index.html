@@ -29,6 +29,7 @@
 		}
 
 		function changeScoreNos(value) {
+			// navigator.vibrate(500);
 			nos = nos + value;
 			if (nos< 0) {nos = 0;}			
 			if (nos> 30) {nos = 30;}
@@ -56,6 +57,7 @@
 		}
 
 		function changeScoreEllos(value) {
+			// navigator.vibrate(500);
 			ellos = ellos + value;
 			if (ellos< 0) {ellos = 0;}			
 			if (ellos> 30) {ellos = 30;}
@@ -123,15 +125,16 @@
 		foreground: #000000; 
 		}
 		table {
-		table-layout: fixed;
-		width: 60%;
-		margin: 10px auto;
+		table-layout:fixed;
+		width: 70%;
+		margin: 20px auto;
 		border-collapse: collapse;
 		}
 		th {
 		border-left: 1px solid #7c6f64;
 		font-family: Arial;
 		color: #ebdbb2;
+		overflow:hidden;
 		}
 		table tr td:first-child, th:first-child{
 		border-left: none;
@@ -139,27 +142,32 @@
 		td {
 		padding: 0.6em;
 		border: 1px solid #7c6f64;
+		overflow:hidden;
 		}
 		tbody tr:nth-child(3n+2) {
 		border-top: 1px solid #7c6f64;
 		}
 		img {
-		max-width: 35%;
-		max-height: 35%
+		width: 60%;
+		height: auto%
 		}
 		.flex-fila {
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
+		overflow: hidden;
+		white-space: nowrap;
 		}
 		.flex-columna {
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
+		overflow: hidden;
+		white-space: nowrap;
 		}
 		button {
-		min-width: 50px;
-		height: 45%;
+		min-width: 40px;
+		height: 35%;
 		width:  45%;
 		background: none;
 		border-radius: 50px;
