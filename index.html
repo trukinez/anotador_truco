@@ -12,13 +12,11 @@
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/4.png">
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/5.png">
 		<script>
-		let nos = 0;
-		let fila_nos = 1;
-		let fila_nos_aux = fila_nos;
-		let ellos = 0;
-		let fila_ellos = 1;
-		let fila_ellos_aux = fila_ellos;
-		let id="";
+		const score = { nos: 0, ellos: 0 };
+		const current_row = { nos: 1, ellos: 1 };
+		let id = "";
+		let image_index = 0;
+		let current_row_aux = 1;
 		const score_img = [
 			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
 			'imagenes/1.png',
@@ -33,61 +31,30 @@
 			}
 		}
 
-		function changeScoreNos(value) {
-			// navigator.vibrate(500);
-			nos = nos + value;
-			if (nos< 0) {nos = 0;}			
-			if (nos> 30) {nos = 30;}
+		function changeScore(side, value) { //no anda :(
+			score[side] = score[side] + value;
+			if (score[side] < 0) {score[side] = 0;}
+			if (score[side] > 30) {score[side] = 30;}
 
+			current_row_aux = current_row[side];
+			current_row[side] = Math.ceil(score[side]/5) || 1; // Funcion de parte entera techo 
 
-			fila_nos_aux = fila_nos;
-			fila_nos = Math.ceil(nos/5) || 1; // Funcion mágica que agrega +1 cada 5 despues del 6
-
-			if (fila_nos < fila_nos_aux) { // Si se va a la fila anterior entonces la ultima debe quedar en blanco
-				id = "fila" + fila_nos_aux + "nos";
+			if (current_row[side] < current_row_aux) {
+				id = "fila" + current_row_aux + side;
 				const img = document.getElementById(id);
 				if (img) {img.src = score_img[0];}
 			}
 
-			let image_index = nos % 5;
-			if (image_index === 0 && nos > 0) image_index = 5;
-
-			id = "fila" + fila_nos + "nos";
+			image_index = score[side] % 5;
+			if (image_index === 0 && score[side] > 0){image_index = 5;}
+			
+			id = "fila" + current_row[side] + side;
 			const img = document.getElementById(id);
 
 			if (img) {img.src = score_img[image_index];}
-			if (nos >= 30) {
-				setTimeout(function() {newGame();},250); // Timeout para que el dom renderice a tiempo la ultima imagen
+			if (score[side] >= 30) {
+				setTimeout(function() {newGame();},250); // Timeout para que el ultimo fosforo aparezca 
 			}
-		}
-
-		function changeScoreEllos(value) {
-			// navigator.vibrate(500);
-			ellos = ellos + value;
-			if (ellos< 0) {ellos = 0;}			
-			if (ellos> 30) {ellos = 30;}
-
-
-			fila_ellos_aux = fila_ellos;
-			fila_ellos = Math.ceil(ellos/5) || 1; // Funcion mágica que agrega +1 cada 5 despues del 6 (fun techo)
-
-			if (fila_ellos < fila_ellos_aux) {
-				id = "fila" + fila_ellos_aux + "ellos";
-				const img = document.getElementById(id);
-				if (img) {img.src = score_img[0];}
-			}
-
-			let image_index = ellos % 5;
-			if (image_index === 0 && ellos > 0) image_index = 5;
-
-			id = "fila" + fila_ellos + "ellos";
-			const img = document.getElementById(id);
-
-			if (img) {img.src = score_img[image_index];}
-			if (ellos >= 30) {
-				setTimeout(function() {newGame();},250); // Timeout para que el dom renderice a tiempo el ultimo fosforo
-			}
-
 		}
 			</script>
 
@@ -195,8 +162,10 @@
 		<div class="flex-fila">
 			
 		<div class="flex-columna">
-		<button onclick="changeScoreNos(+1)">➕</button>
-		<button onclick="changeScoreNos(-1)">➖</button>
+		<!-- <button onclick="changeScoreNos(+1)">➕</button> -->
+		<!-- <button onclick="changeScoreNos(-1)">➖</button> -->
+		<button onclick="changeScore('nos',+1)">➕</button>
+		<button onclick="changeScore('nos',-1)">➖</button>
 		</div>
 		<table>
 			<tr>
@@ -257,8 +226,10 @@
 		</table>
 
 		<div class="flex-columna">
-		<button onclick="changeScoreEllos(+1)">➕ </button>
-		<button onclick="changeScoreEllos(-1)">➖ </button>
+		<!-- <button onclick="changeScoreEllos(+1)">➕ </button> -->
+		<!-- <button onclick="changeScoreEllos(-1)">➖ </button> -->
+		<button onclick="changeScore('ellos',+1)">➕</button>
+		<button onclick="changeScore('ellos',-1)">➖</button>
 		</div>
 
 		</div>
