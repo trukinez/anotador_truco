@@ -5,234 +5,88 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0">
 		<title>Anotador de Truco</title>
+
 		<link rel="icon" href="imagenes/sol.png" type="image/x-icon"> 
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/1.png">
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/2.png">
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/3.png">
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/4.png">
 		<link rel="preload" as="image" crossorigin="anonymous" type="image/png" href="imagenes/5.png">
-		<script>
-		const score = { nos: 0, ellos: 0 };
-		const current_row = { nos: 1, ellos: 1 };
-		let id = "";
-		let image_index = 0;
-		let current_row_aux = 1;
-		const score_img = [
-			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-			'imagenes/1.png',
-			'imagenes/2.png', 
-			'imagenes/3.png',
-			'imagenes/4.png',
-			'imagenes/5.png'];
-
-		function newGame() {
-			if (confirm("¿Querés empezar una partida nueva?") == true) {
-				location.reload();
-			}
-		}
-
-		function changeScore(side, value) { //no anda :(
-			score[side] = score[side] + value;
-			if (score[side] < 0) {score[side] = 0;}
-			if (score[side] > 30) {score[side] = 30;}
-
-			current_row_aux = current_row[side];
-			current_row[side] = Math.ceil(score[side]/5) || 1; // Funcion de parte entera techo 
-
-			if (current_row[side] < current_row_aux) {
-				id = "fila" + current_row_aux + side;
-				const img = document.getElementById(id);
-				if (img) {img.src = score_img[0];}
-			}
-
-			image_index = score[side] % 5;
-			if (image_index === 0 && score[side] > 0){image_index = 5;}
-			
-			id = "fila" + current_row[side] + side;
-			const img = document.getElementById(id);
-
-			if (img) {img.src = score_img[image_index];}
-			if (score[side] >= 30) {
-				setTimeout(function() {newGame();},250); // Timeout para que el ultimo fosforo aparezca 
-			}
-		}
-			</script>
-
-		<style>
-		body{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		background: #282828;
-		}
-		h1 {
-		font-family: Arial;
-		color: #d79921;
-		}
-		hr {
-		margin-left: 0;
-		margin-right: 0;
-		width: 100%;
-		background: #7c6f68; 
-		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-		}
-		table {
-		table-layout:fixed;
-		width: 70%;
-		margin: 20px auto;
-		border-collapse: collapse;
-		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-		}
-		th {
-		border-left: 3px solid  #d79921;
-		font-family: Arial;
-		color: #d79921;
-		font-size: 25px;
-		overflow:hidden;
-		}
-		table tr td:first-child, th:first-child{
-		border-left: none;
-		}
-		td {
-		padding: 0.6em;
-		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-		border: 3px solid  #d79921;
-		overflow:hidden;
-		}
-		tbody tr:nth-child(3n+2) {
-		border-top: 3px solid #d79921;
-		}
-		img {
-		width: 60%;
-		height: auto%
-		}
-		.flex-fila {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		overflow: hidden;
-		white-space: nowrap;
-		}
-		.flex-columna {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		overflow: hidden;
-		white-space: nowrap;
-		}
-		button {
-		min-width: 40px;
-		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-		height: 35%;
-		width:  45%;
-		background: none;
-		border-radius: 50px;
-		color: #ebdbb2;
-		font-size: 15px;
-		}
-		:root {
-		--bg-primary: #ffffff;
-		--bg-secondary: #f5f5f5;
-		--text-primary: #1a1a1a;
-		--text-secondary: #666666;
-		--border-color: #e5e5e5;
-		--accent: #0066ff;
-		}
-
-		/* Dark mode */
-		@media (prefers-color-scheme: dark) {
-		:root {
-		--bg-primary: #1a1a1a;
-		--bg-secondary: #2d2d2d;
-		--text-primary: #ffffff;
-		--text-secondary: #a0a0a0;
-		--border-color: #404040;
-		--accent: #4d94ff;
-		}
-		}
-		</style>
-
-
+		<link rel="stylesheet" type="text/css" href="main.css">
 	</head>
 	<body>
 		<h1>Anotador</h1>
 		<hr>
 		<div class="flex-fila">
-			
-		<div class="flex-columna">
-		<!-- <button onclick="changeScoreNos(+1)">➕</button> -->
-		<!-- <button onclick="changeScoreNos(-1)">➖</button> -->
-		<button onclick="changeScore('nos',+1)">➕</button>
-		<button onclick="changeScore('nos',-1)">➖</button>
-		</div>
-		<table>
-			<tr>
-				<th>Nos</th>
-				<th>Ellos</th>
-			</tr>
-			<tr>
-				<th><img id="fila1nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>  
-				<!-- 1px transparent encoded image 
-				https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/ -->
-				<th><img id="fila1ellos" 
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
-					alt=""></th>
-			</tr>
-			<tr>
-				<th><img id="fila2nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-				<th><img id="fila2ellos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-			</tr>
-			<tr>
-				<th><img id="fila3nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-				<th><img id="fila3ellos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-			</tr>
-			<tr>
-				<th><img id="fila4nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-				<th><img id="fila4ellos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-			</tr>
-			<tr>
-				<th><img id="fila5nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-				<th><img id="fila5ellos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-			</tr>
-			<tr>
-				<th><img id="fila6nos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-				<th><img id="fila6ellos"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					alt=""></th>
-			</tr>
 
-		</table>
+			<div class="flex-columna">
+				<button id="add_nos" onclick="changeScore('nos',+1)" >➕</button>
+				<button id="-nos"  onclick="changeScore('nos',-1)" >➖</button>
+			</div>
+			<table>
+				<tr>
+					<th>Nos</th>
+					<th>Ellos</th>
+				</tr>
+				<tr>
+					<th><img id="fila1nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>  
+					<!-- 1px transparent encoded image https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/ -->
+					<th><img id="fila1ellos" 
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+						alt=""></th>
+				</tr>
+				<tr>
+					<th><img id="fila2nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+					<th><img id="fila2ellos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+				</tr>
+				<tr>
+					<th><img id="fila3nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+					<th><img id="fila3ellos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+				</tr>
+				<tr>
+					<th><img id="fila4nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+					<th><img id="fila4ellos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+				</tr>
+				<tr>
+					<th><img id="fila5nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+					<th><img id="fila5ellos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+				</tr>
+				<tr>
+					<th><img id="fila6nos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+					<th><img id="fila6ellos"
+						src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+						alt=""></th>
+				</tr>
 
-		<div class="flex-columna">
-		<!-- <button onclick="changeScoreEllos(+1)">➕ </button> -->
-		<!-- <button onclick="changeScoreEllos(-1)">➖ </button> -->
-		<button onclick="changeScore('ellos',+1)">➕</button>
-		<button onclick="changeScore('ellos',-1)">➖</button>
-		</div>
+			</table>
+
+			<div class="flex-columna">
+				<button id="+ellos" onclick="changeScore('ellos',+1)" >➕</button>
+				<button id="-ellos" onclick="changeScore('ellos',-1)" >➖</button>
+			</div>
 
 		</div>
 		<button style="max-width:70px" onclick="newGame()">Nueva Partida</button>
+		<script src="script.js"></script>
 	</body>
-
+	
