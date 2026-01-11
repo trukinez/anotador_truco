@@ -20,8 +20,8 @@
 		<div class="flex-fila">
 
 			<div class="flex-columna">
-				<button id="add_nos" onclick="changeScore('nos',+1)" >➕</button>
-				<button id="-nos"  onclick="changeScore('nos',-1)" >➖</button>
+				<button id="+nos" onclick="changeScore('nos',+1)" >+</button>
+				<button id="-nos"  onclick="changeScore('nos',-1)" >-</button>
 			</div>
 			<table>
 				<tr>
@@ -81,12 +81,13 @@
 			</table>
 
 			<div class="flex-columna">
-				<button id="+ellos" onclick="changeScore('ellos',+1)" >➕</button>
-				<button id="-ellos" onclick="changeScore('ellos',-1)" >➖</button>
+				<button id="+ellos" onclick="changeScore('ellos',+1)" >+</button>
+				<button id="-ellos" onclick="changeScore('ellos',-1)" >-</button>
 			</div>
 
 		</div>
-		<button style="max-width:70px" onclick="newGame()">Nueva Partida</button>
-		<script src="script.js"></script>
+		<button style="max-width:90px" onclick="newGame()">Nueva Partida</button>
+
+		<script src="script.js" defer></script>
 	</body>
 	

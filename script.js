@@ -11,6 +11,15 @@ const score_img = [
 	'imagenes/4.png',
 	'imagenes/5.png'];
 
+const add_nos_btn = document.getElementById("+nos");
+add_nos_btn.addEventListener('click', changeScore('nos',+1));
+const sub_nos_btn = document.getElementById("-nos");
+sub_nos_btn.addEventListener("click", changeScore('nos',-1));
+const add_ellos_btn = document.getElementById("+ellos");
+add_ellos_btn.addEventListener("click", changeScore('ellos',+1));
+const sub_ellos_btn = document.getElementById("-ellos");
+sub_ellos_btn.addEventListener("click", changeScore('ellos',-1));
+
 function newGame() {
 	if (confirm("¿Querés empezar una partida nueva?") == true) {
 		location.reload();
@@ -43,13 +52,5 @@ function changeScore(side, value) {
 	}
 }
 
-const add_nos_btn = document.getElementById("add_nos");
-add_nos_btn.addEventListener('click', changeScore('nos',+1));
-const sub_nos_btn = document.getElementById("-nos");
-sub_nos_btn.addEventListener("click", changeScore('nos',-1));
-const add_ellos_btn = document.getElementById("+ellos");
-add_ellos_btn.addEventListener("click", changeScore('ellos',+1));
-const sub_ellos_btn = document.getElementById("-ellos");
-sub_ellos_btn.addEventListener("click", changeScore('ellos',-1));
 
 console.log("sourced");
