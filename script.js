@@ -53,4 +53,8 @@ function changeScore(side, value) {
 }
 
 
+document.ondblclick = function (e) {
+    e.preventDefault();
+}
+
 console.log("sourced");
