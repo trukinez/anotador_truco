@@ -4,7 +4,9 @@ let id = "";
 let image_index = 0;
 let current_row_aux = 1;
 const score_img = [
-	'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+	'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', // GIF invisible
+	// Base64 Encode of 1x1px Transparent GIF, 
+    // https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
 	'imagenes/1.png',
 	'imagenes/2.png', 
 	'imagenes/3.png',
@@ -32,7 +34,7 @@ function changeScore(side, value) {
 	if (score[side] > 30) {score[side] = 30;}
 
 	current_row_aux = current_row[side];
-	current_row[side] = Math.ceil(score[side]/5) || 1; // Funcion de parte entera techo 
+	current_row[side] = Math.ceil(score[side]/5) || 1; // Funcion de parte entera techo (o 1 si la funcion da cero)
 
 	if (current_row[side] < current_row_aux) {
 		id = "fila" + current_row_aux + side;
@@ -54,7 +56,8 @@ function changeScore(side, value) {
 
 
 document.ondblclick = function (e) {
-    e.preventDefault();
+    e.preventDefault();  // Funcion que deshabilita el zoom 
+						//por hacer doble click en Safari WebKit
 }
 
 console.log("sourced");
